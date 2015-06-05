@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSURL *url = [NSURL URLWithString:@"http://192.168.1.78:8585/api/games/chanhassen/news"];
+    NSURL *url = [NSURL URLWithString:@"http://192.168.1.78:8585/api/games/keller/news"];
     
     EventSource *source = [EventSource eventSourceWithURL:url];
 //    [source addEventListener:@"hello_event" handler:^(Event *e) {

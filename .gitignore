@@ -40,3 +40,7 @@ xcuserdata
 # Carthage/Checkouts
 
 Carthage/Build
+
+*.xcbkptlist
+
+Serpents.iOS.xcworkspace/xcuserdata/guillea.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
