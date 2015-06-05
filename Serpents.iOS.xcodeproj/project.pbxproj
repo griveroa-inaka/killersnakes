@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		030C43C52CF15F0363A635FA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DAB4BBCCC666244F060291 /* libPods.a */; };
 		990E20D31B21FC0D004D389F /* SnakeEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 990E20D21B21FC0D004D389F /* SnakeEngine.m */; };
+		7D8F61841B21FC5B003EE59E /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8F61831B21FC5B003EE59E /* GameViewController.m */; };
+		7D8F61871B21FC91003EE59E /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8F61861B21FC91003EE59E /* GameView.m */; };
 		996C2DA91B21E4C700777D83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 996C2DA81B21E4C700777D83 /* main.m */; };
 		996C2DAC1B21E4C700777D83 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 996C2DAB1B21E4C700777D83 /* AppDelegate.m */; };
 		996C2DAF1B21E4C700777D83 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 996C2DAE1B21E4C700777D83 /* ViewController.m */; };
@@ -34,6 +36,10 @@
 		50CD18A0AB413CF019E500D8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		990E20D11B21FC0D004D389F /* SnakeEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnakeEngine.h; sourceTree = "<group>"; };
 		990E20D21B21FC0D004D389F /* SnakeEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnakeEngine.m; sourceTree = "<group>"; };
+		7D8F61821B21FC5B003EE59E /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		7D8F61831B21FC5B003EE59E /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		7D8F61851B21FC91003EE59E /* GameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameView.h; sourceTree = "<group>"; };
+		7D8F61861B21FC91003EE59E /* GameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameView.m; sourceTree = "<group>"; };
 		996C2DA31B21E4C700777D83 /* Serpents.iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Serpents.iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		996C2DA71B21E4C700777D83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		996C2DA81B21E4C700777D83 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -103,10 +109,14 @@
 				996C2DAB1B21E4C700777D83 /* AppDelegate.m */,
 				996C2DAD1B21E4C700777D83 /* ViewController.h */,
 				996C2DAE1B21E4C700777D83 /* ViewController.m */,
+				7D8F61821B21FC5B003EE59E /* GameViewController.h */,
+				7D8F61831B21FC5B003EE59E /* GameViewController.m */,
 				996C2DB01B21E4C700777D83 /* Main.storyboard */,
 				996C2DB31B21E4C700777D83 /* Images.xcassets */,
 				996C2DB51B21E4C700777D83 /* LaunchScreen.xib */,
 				996C2DA61B21E4C700777D83 /* Supporting Files */,
+				7D8F61851B21FC91003EE59E /* GameView.h */,
+				7D8F61861B21FC91003EE59E /* GameView.m */,
 				990E20D11B21FC0D004D389F /* SnakeEngine.h */,
 				990E20D21B21FC0D004D389F /* SnakeEngine.m */,
 			);
@@ -283,6 +293,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D8F61841B21FC5B003EE59E /* GameViewController.m in Sources */,
+				7D8F61871B21FC91003EE59E /* GameView.m in Sources */,
 				990E20D31B21FC0D004D389F /* SnakeEngine.m in Sources */,
 				996C2DAF1B21E4C700777D83 /* ViewController.m in Sources */,
 				996C2DAC1B21E4C700777D83 /* AppDelegate.m in Sources */,
