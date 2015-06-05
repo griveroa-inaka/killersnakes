@@ -13,53 +13,82 @@
 @interface SnakeEngine(){
     EventSource *eventSource;
     
+
 }
+
+@property (nonatomic, readwrite, strong) id lastResult;
+@property (nonatomic, strong) NSString* token;
+@property (nonatomic, strong) NSString* gameName;
 
 @end
 
 @implementation SnakeEngine
 
--(void)start:(NSString *)server
-        game:(NSString *)game{
++ (id)sharedEngine
+{
+    static SnakeEngine *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
+-(void)startGame:(NSString *)game{
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/api/games/%@/news", server, game];
+    NSString *urlString = [NSString stringWithFormat:@"%@/api/games/%@/news", self.serverURL, game];
     NSURL *url = [NSURL URLWithString:urlString];
     
     eventSource = [EventSource eventSourceWithURL:url];
     [eventSource onMessage:^(Event *event) {
-        [self.delegate didReceiveEvent:event];
+        NSLog(@"Event: %@", event);
+        
+        if([self.delegate respondsToSelector:@selector(didReceiveEvent:)])
+            [self.delegate didReceiveEvent:event];
     }];
 }
 
--(void)join:(NSString *)server
-       game:(NSString *)game
+- (void) start
+{
+    [self startGame: self.gameName];
+}
+
+-(void)joinGame:(NSString *)game
       snake:(NSString *)snake
     success:(void (^)(NSDictionary *))success
     failure:(void (^)(NSError *))failure
 {
-    NSString *url = [NSString stringWithFormat:@"%@/api/games/%@/serpents", server, game];
+    NSString *url = [NSString stringWithFormat:@"%@/api/games/%@/serpents", self.serverURL, game];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"name": snake };
     
+    self.gameName = game;
+    self.snakeName = snake;
+
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(responseObject);
+        self.token = [responseObject objectForKey:@"token"];
+        self.lastResult = responseObject;
+        [self start];
+        
+        if(success)
+            success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
+        if(failure)
+            failure(error);
     }];
 }
 
--(void)move:(NSString *)server
-       game:(NSString *)game
-      token:(NSString *)token
-  direction:(NSString *)direction
+-(void)moveDirection:(NSString *)direction
     success:(void (^)(NSDictionary *))success
     failure:(void (^)(NSError *))failure{
     
+    if([direction isEqualToString:self.direction])
+        return;
     
-    NSString *url = [NSString stringWithFormat:@"%@/api/games/%@/serpents/%@", server,game, token];
+    NSString *url = [NSString stringWithFormat:@"%@/api/games/%@/serpents/%@", self.serverURL,self.gameName, self.token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"direction": direction };
@@ -69,9 +98,13 @@
     
     [manager PUT:url parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             success(responseObject);
+             self.lastResult = responseObject;
+             self.direction = direction;
+             if(success)
+                 success(responseObject);
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             failure(error);
+             if(failure)
+                 failure(error);
          }];
 }
 

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <EventSource.h>
 
 @interface GameView : UIImageView
 
+-(void) updateWithEvent:(Event*) event;
 @end

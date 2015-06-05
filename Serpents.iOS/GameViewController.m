@@ -8,11 +8,14 @@
 
 #import "GameViewController.h"
 #import "GameView.h"
+#import "SnakeEngine.h"
 
 
-@interface GameViewController ()
+@interface GameViewController () <SnakeEventDelegate>
 
-@property (nonatomic, strong) GameView* gameView;
+@property (nonatomic, strong) IBOutlet GameView* gameView;
+@property (nonatomic, strong) IBOutlet UILabel* snakeNameLbl;
+
 @end
 
 @implementation GameViewController
@@ -21,8 +24,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.gameView = [[GameView alloc] initWithFrame:CGRectMake(10, 20, 50, 50)];
-    [self.view addSubview:self.gameView];
+    SnakeEngine *engine = [SnakeEngine sharedEngine];
+    [engine setDelegate:self];
+
+    [self.snakeNameLbl setText:engine.snakeName];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,6 +35,27 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)didReceiveEvent:(Event *)event
+{
+    [self.gameView updateWithEvent:event];
+}
+
+- (IBAction) moveUp:(id)sender
+{
+    [[SnakeEngine sharedEngine] moveDirection:@"up" success:NULL failure:NULL];
+}
+- (IBAction) moveDown:(id)sender
+{
+    [[SnakeEngine sharedEngine] moveDirection:@"down" success:NULL failure:NULL];
+}
+- (IBAction) moveLeft:(id)sender
+{
+    [[SnakeEngine sharedEngine] moveDirection:@"left" success:NULL failure:NULL];
+}
+- (IBAction) moveRight:(id)sender
+{
+    [[SnakeEngine sharedEngine] moveDirection:@"right" success:NULL failure:NULL];
+}
 /*
 #pragma mark - Navigation
 

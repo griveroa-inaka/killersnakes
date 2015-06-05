@@ -10,6 +10,8 @@
 #import <AFNetworking.h>
 
 #import "ViewController.h"
+#import "GameViewController.h"
+#import "SnakeEngine.h"
 
 @interface ViewController ()
 
@@ -19,35 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    NSURL *url = [NSURL URLWithString:@"http://192.168.1.78:8585/api/games/keller/news"];
-//    
-//    EventSource *source = [EventSource eventSourceWithURL:url];
-//    [source addEventListener:@"hello_event" handler:^(Event *e) {
-//        NSLog(@"%@: %@", e.event, e.data);
-//    }];
-    
-//    [source onMessage:^(Event *e) {
-//        NSLog(@"%@: %@", e.event, e.data);
-//    }];
-    
-    
-    //    TRVSEventSource *eventSource = [[TRVSEventSource alloc] initWithURL:url];
-    //    eventSource.delegate = self;
-    //
-    //    int total = 0;
-    //    [eventSource addListenerForEvent:@"game_status" usingEventHandler:^(TRVSServerSentEvent *event, NSError *error) {
-    //        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:event.data options:0 error:NULL];
-    ////        Message *message = [Message messageWithJSON:JSON];
-    //
-    ////        NSLog(@"%@", JSON);
-    //        NSLog(@"%d", total);
-    //
-    //
-    //    }];
-    //
-    //    [eventSource open];
-    
     
 }
 
@@ -62,25 +35,18 @@
     NSString *serverURL = self.serverURLText.text;
     NSString *gameName = self.gameNameText.text;
 
+    SnakeEngine* engine = [SnakeEngine sharedEngine];
+    engine.serverURL = serverURL;
     
-    
-    NSString *url = [NSString stringWithFormat:@"%@/api/games/%@/serpents", serverURL, gameName];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSDictionary *parameters = @{@"name": self.serpentNameText.text };
+    [engine joinGame:gameName snake:self.serpentNameText.text success:^(NSDictionary *result) {
 
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self performSegueWithIdentifier:@"GameSegue" sender:self];
+        
+        NSLog(@"JSON: %@", result);
+    } failure:^(NSError *error) {
         NSLog(@"Error: %@", error);
+
     }];
-    
-    
-    
-    
-    
     
 }
 @end

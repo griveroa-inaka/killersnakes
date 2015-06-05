@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <EventSource.h>
 
 @protocol SnakeEventDelegate <NSObject>
 
@@ -16,22 +17,24 @@
 
 @interface SnakeEngine : NSObject
 
--(void)start:(NSString *)server
-        game:(NSString *)game;
++ (id) sharedEngine;
 
--(void)join:(NSString *)server
-       game:(NSString *)game
+-(void)startGame:(NSString *)game;
+-(void)start;
+
+-(void)joinGame:(NSString *)game
       snake:(NSString *)snake
     success:(void (^)(NSDictionary *result))success
     failure:(void (^)(NSError *error))failure;
 
--(void)move:(NSString *)server
-       game:(NSString *)game
-      token:(NSString *)token
-  direction:(NSString *)direction
+-(void)moveDirection:(NSString *)direction
     success:(void (^)(NSDictionary *result))success
     failure:(void (^)(NSError *error))failure;
 
 @property id<SnakeEventDelegate> delegate;
+@property (nonatomic, strong) NSString* direction;
+@property (nonatomic, readonly, strong) id lastResult;
+@property (nonatomic, strong) NSString* serverURL;
+@property (nonatomic, strong) NSString* snakeName;
 
 @end
