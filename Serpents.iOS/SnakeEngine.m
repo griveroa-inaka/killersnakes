@@ -6,10 +6,30 @@
 //  Copyright (c) 2015 Guillermo Rivero. All rights reserved.
 //
 
+#import <EventSource.h>
 #import <AFNetworking.h>
 #import "SnakeEngine.h"
 
+@interface SnakeEngine(){
+    EventSource *eventSource;
+    
+}
+
+@end
+
 @implementation SnakeEngine
+
+-(void)start:(NSString *)server
+        game:(NSString *)game{
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/api/games/%@/news", server, game];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    eventSource = [EventSource eventSourceWithURL:url];
+    [eventSource onMessage:^(Event *event) {
+        [self.delegate didReceiveEvent:event];
+    }];
+}
 
 -(void)join:(NSString *)server
        game:(NSString *)game
@@ -54,5 +74,7 @@
              failure(error);
          }];
 }
+
+
 
 @end
