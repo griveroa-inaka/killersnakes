@@ -10,7 +10,17 @@
 
 @interface SnakeEngine : NSObject
 
--(void)join:(NSString *)game;
--(void)move:(NSString *)token direction:(NSString *)direction;
+-(void)join:(NSString *)server
+       game:(NSString *)game
+      snake:(NSString *)snake
+    success:(void (^)(NSDictionary *result))success
+    failure:(void (^)(NSError *error))failure;
+
+-(void)move:(NSString *)server
+       game:(NSString *)game
+      token:(NSString *)token
+  direction:(NSString *)direction
+    success:(void (^)(NSDictionary *result))success
+    failure:(void (^)(NSError *error))failure;
 
 @end
