@@ -39,6 +39,10 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/api/games/%@/news", self.serverURL, game];
     NSURL *url = [NSURL URLWithString:urlString];
     
+    if(eventSource) {
+        [eventSource close];
+    }
+    
     eventSource = [EventSource eventSourceWithURL:url];
     [eventSource onMessage:^(Event *event) {
         NSLog(@"Event: %@", event);
