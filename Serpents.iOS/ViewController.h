@@ -10,6 +10,14 @@
 
 @interface ViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextField *serverURLText;
+@property (weak, nonatomic) IBOutlet UITextField *gameNameText;
+@property (weak, nonatomic) IBOutlet UITextField *serpentNameText;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *gameStatusLabel;
+
+- (IBAction)joingGameButton:(UIButton *)sender;
 
 @end
 
